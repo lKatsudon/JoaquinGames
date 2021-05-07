@@ -4,7 +4,7 @@ import { View, Text } from 'react-native'
 export default function TopGames(){
     return(
         <View>
-            <Text>Top 5 VIDEOJUEGOS</Text>
+            <Text>AQUI TENDRAS LAS NOTICIAS MAS RECIENTES SOBRE NUEVOS LANZAMIENTOS, TOODO SOBRE TUS JUEGOS FAVORITOS</Text>
     
         </View>
     )

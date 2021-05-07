@@ -39,7 +39,7 @@ export default function Navigation(){
                 <Tab.Screen 
                 name='top-games' 
                 component={TopGames}
-                options={{title:"TOP 5 NOTI-GAMES"}}
+                options={{title:"NOTI-GAMES"}}
                 />
                 <Tab.Screen 
                 name='search-games' 
