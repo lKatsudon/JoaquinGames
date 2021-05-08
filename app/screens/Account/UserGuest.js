@@ -13,7 +13,7 @@ export default function UserGuest(){
         <ScrollView style={styles.container}>
             <Image
                 style={styles.strech}
-                source={require('../../../assets/img/nobara-bebe.jpg')}
+                source={require('../../../assets/img/bowe2.png')}
             />
             <Text style={styles.title}> Ingresa a tu perfil </Text>
             <Text style={styles.description}>
@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 19,
         marginBottom:10,
-        textAlign:'center'
+        textAlign:'center',
+        color: '#F40000'
     },
     description:{
         marginBottom: 20,
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     buttonStyle:{
-        backgroundColor: '#b7657b'
+        backgroundColor: '#F40000'
     },
     btnContainer:{
         width: '70%'

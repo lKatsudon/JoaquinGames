@@ -12,12 +12,12 @@ export default function AccountStack(){
             <Stack.Screen
                 name='account'
                 component={Account}
-                options={{ title:'CUANDOCUENTESCUENTOSCUENTACUANTOSCUENTOSCUENTAS'}}
+                options={{ title:'CUENTA'}}
             />
             <Stack.Screen
                 name='login'
                 component={Login}
-                options={{ title:'INICIAR SESION BRUH'}}
+                options={{ title:'INICIA SESION BRUH'}}
             />
             <Stack.Screen
                 name='register'
