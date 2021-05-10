@@ -5,17 +5,17 @@ import { validateEmail } from '../../utils/validation'
 import firebase from 'firebase'
 import { useNavigation } from '@react-navigation/native'
 
+
 export default function RegisterForm(props){
     const { toastRef } = props
     const [showPassword, setShowPassword] = useState(false)
-    const [showRepeatPassword, setShowRepeatPassword] = useState(false)
     const [formData, setFormData] = useState(defaultFormValues())
     const navigation = useNavigation()
 
     const onSubmit = () => {
        // console.log(formData)
        // console.log(validateEmail(formData.email))
-       if(formData.email.length===0||formData.password.length===0||formData.repeatPassword.length===0){
+       if(formData.email.length===0||formData.password.length===0){
        console.log('Todos los campos son requeridos carnal')
        toastRef.current.show({
         type: 'error',
@@ -34,17 +34,9 @@ export default function RegisterForm(props){
                 text2: 'Email incorrecto',
                 visibilityTime: 4000,
      });         
-       } else if (formData.password	!== formData.repeatPassword){
-            console.log('Las contraseñas deben ser iguales dude')
-            toastRef.current.show({
-                type: 'error',
-                position: 'top',
-                text1: 'Error',
-                text2: 'Las contraseñas no son iguales',
-                visibilityTime: 4000,
-     });         
+       
        } else if (formData.password.length < 6){
-           console.log('La contra debe tener almenos 6 caracteres')
+           console.log('Contraseña incorrecta')
            toastRef.current.show({
             type: 'error',
             position: 'top',
@@ -55,7 +47,7 @@ export default function RegisterForm(props){
        } else {
            firebase
            .auth()
-           .createUserWithEmailAndPassword(formData.email, formData.password)
+           .signInWithEmailAndPassword(formData.email, formData.password)
            .then((Response)=>{
                navigation.navigate('account')
            })
@@ -64,7 +56,7 @@ export default function RegisterForm(props){
                     type: 'error',
                     position: 'top',
                     text1: 'Cuenta',
-                    text2: 'Este correo ya ha sido registrado',
+                    text2: 'El correo o contraseña no son validos',
                     visibilityTime: 4000,
                 })
             })                  
@@ -99,27 +91,11 @@ export default function RegisterForm(props){
                     name={showPassword ? 'eye-off-outline':'eye-outline' }
                     iconStyle={styles.iconRight}
                     onPress={()=> setShowPassword(!showPassword)}
-             />}
-
-           />
-           <Input
-                placeholder='Repetir contraseña'
-                placeholderTextColor="#F40000"
-                containerStyle={styles.inputForm}
-                passwordRules={true}
-                secureTextEntry={showRepeatPassword ? false : true}
-                onChange={(e)=>onChange (e, 'repeatPassword')}
-                rightIcon={<Icon
-                    type='material-community'
-                    name={showRepeatPassword ? 'eye-off-outline':'eye-outline' }
-                    iconStyle={styles.iconRight}
-                    onPress={()=> setShowRepeatPassword(!showRepeatPassword)}
- 
-            />}
-
-           />
+                 /> }
+            />
+          
            <Button
-                title='UNETE'
+                title='INICIAR SESIÓN'
                 containerStyle={styles.btnContainerRegister}
                 buttonStyle={styles.btnRegister}
                 onPress={onSubmit}

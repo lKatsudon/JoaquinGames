@@ -1,35 +1,48 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { StyleSheet, View, ScrollView, Text, Image } from 'react-native'
 import { Divider } from 'react-native-elements'
 import { useNavigation } from '@react-navigation/native'
+import LoginForm from '../../components/Account/LoginForm'
+import Toast from 'react-native-toast-message'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 
 export default function Login(){
+    const toastRef = useRef()
     return(
-        <ScrollView>
+        <KeyboardAwareScrollView>
             <Image
-                source={require('../../../assets/img/YNEY6.jpg')}
+                source={require('../../../assets/img/morrigan2.gif')}
                 resizeMode = 'contain'
                 style={styles.logo}
             />
             <View style={styles.viewContainer}>
-                <Text> Formulario de inicio de sesion </Text>
+                <Text style={styles.textForm}> 
+                    ¡Hola Gamer! 
+                 </Text>
+            <View style = {styles.viewForms}>
+                <LoginForm toastRef={toastRef}/>
+            
+            </View>
                 <CreateAccount/>
             </View>
             <Divider style = {styles.divider}/>
-        </ScrollView>
+            <Toast ref={toastRef}/>
+
+        </KeyboardAwareScrollView>
     )
 }
 
 function CreateAccount(){
     const navigation = useNavigation()
     return(
-        <Text style={styles.textTegister}> 
+        <Text style={styles.textRegister}> 
             HEY GAMER! ¿Aun no tienes cuenta? {' '}
             <Text
                 style = {styles.linkRegister}
                 onPress={()=>navigation.navigate('register')}
             >
-                Registrate rey 
+                ¡Registrate!
             </Text>
         
         </Text> 
@@ -49,10 +62,11 @@ const styles = StyleSheet.create({
         color: '#000000'
         
     },
-    textTegister:{
+    textRegister:{
         marginTop: 15,
         marginLeft: 10,
-        marginRight: 10
+        marginRight: 10,
+        fontWeight: 'bold'
     },
     linkRegister:{
         color: '#F40000',
@@ -62,6 +76,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#F40000',
         margin: 40,
         height: 5
+    },
+    viewForms:{
+        marginRight: 40,
+        marginLeft: 40
+    },
+    textForm:{
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#000000',
+        fontSize: 30
     }
 
 })
