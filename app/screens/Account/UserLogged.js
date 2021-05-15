@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import firebase from 'firebase'
 import { Button } from 'react-native-elements'
 import Toast from 'react-native-toast-message'
@@ -16,26 +16,21 @@ export default function UserLogged(){
         })()
     },[])
     return(
-        <ScrollView style={styles.container}>    
-            <Image 
-                style={styles.strech}
-  //              source={require('../../../assets/img/user-gamer.png')}
+        <ScrollView>    
             
-            />
             <View style={styles.viewButton}>
                 {userInfo&&<InfoUser userInfo={userInfo} toastRef={toastRef}/>}             
-                <Text> Account options...</Text>
-            <Text style={styles.textLogout}>
-                Hey Gamer...¿Ya te tienes que ir?
-
-            </Text>
+            </View>
+            <View style={styles.viewButton}>    
             <Button 
                 title='Cerrar sesión' 
                 buttonStyle={styles.buttonColor}
+                containerStyle={styles.container}
                 onPress={()=>firebase.auth().signOut()}
             />
             
-        </View>
+            </View>
+            <Toast ref={toastRef}/>
         </ScrollView>   
     )
 }
@@ -51,7 +46,14 @@ const styles = StyleSheet.create({
     },
     viewButton:{
         flex: 1,
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 20
     },
+    container:{
+        paddingTop:30,
+        marginTop: 20,
+        width: '63%'
+
+    }
    
 })

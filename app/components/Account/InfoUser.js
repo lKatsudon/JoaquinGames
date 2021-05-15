@@ -4,6 +4,8 @@ import {Avatar} from 'react-native-elements'
 import firebase from 'firebase'
 import * as Permissions from 'expo-permissions'
 import * as ImagePicker from 'expo-image-picker'
+import AccountOptions from '../Account/AccountOptions'
+
 
 export default function InfoUser(props){
    // const {userInfo} = props
@@ -34,7 +36,7 @@ export default function InfoUser(props){
                 toastRef.current.show({
                     type: 'info',
                     position: 'top',
-                    text1: 'canceled',
+                    text1: 'Cancelado',
                     text2: 'No elegiste un Avatar',
                     visibilityTime: 3000,
                 }); 
@@ -83,24 +85,29 @@ export default function InfoUser(props){
     }
 
     return(
-        <View style={styles.ViewUserInfo}>
-            <Avatar 
-                title= 'ICR'
-                rounded
-                size= 'large'
-                onPress={changeAvatar}
-                containerStyle={styles.userInfoAvatar}
-                source={
-                    photoURL ? {uri:photoURL} : require('../../../assets/img/user-gamer.png')
-                }
-            />
-            <View>
-                <Text style={styles.displayName}>
-                    {displayName ? displayName : 'Invitado'}
-                </Text>
-                <Text style={styles.displayEmail}>{email ? email : 'Entrada a traves de otra plataforma'}</Text>
+        <View>
+            <View style={styles.ViewUserInfo}>
+                <Avatar 
+                    title= 'ICR'
+                    rounded
+                    size= 'large'
+                    onPress={changeAvatar}
+                    containerStyle={styles.userInfoAvatar}
+                    source={
+                        photoURL ? {uri:photoURL} : require('../../../assets/img/user-gamer.png')
+                    }
+                />
+                <View>
+                    <Text style={styles.displayName}>
+                        {displayName ? displayName : 'Invitado'}
+                    </Text>
+                    <Text style={styles.displayEmail}>{email ? email : 'Entrada a traves de otra plataforma'}</Text>
+                </View>
+                
             </View>
+            <AccountOptions/>
         </View>
+    
     )
 }
 const styles = StyleSheet.create({
@@ -108,9 +115,9 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent: 'center',
         flexDirection: 'row',
-        backgroundColor:'#FFFFFF',
-        paddingTop: 10,
-        paddingBottom: 30
+        backgroundColor:'#F0AB00',
+        paddingTop: 30,
+        paddingBottom: 50
     },
     userInfoAvatar:{
         marginTop: 20,
