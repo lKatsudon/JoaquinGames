@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
     },
     description:{
         marginBottom: 20,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontWeight: 'bold'
     },
     viewBtn:{
         flex: 1,
