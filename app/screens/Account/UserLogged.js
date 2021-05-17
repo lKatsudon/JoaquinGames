@@ -4,22 +4,27 @@ import firebase from 'firebase'
 import { Button } from 'react-native-elements'
 import Toast from 'react-native-toast-message'
 import InfoUser from '../../components/Account/InfoUser'
+import AccountOptions from '../../components/Account/AccountOptions'
 
 
 export default function UserLogged(){
     const [userInfo, setUserInfo] = useState(null)
+    const [reloadUserInfo, setreloadUserInfo] = useState(false)
     const toastRef = useRef()
     useEffect(()=> {
         (async()=>{
             const user = await firebase.auth().currentUser
             setUserInfo(user)
         })()
-    },[])
+        setreloadUserInfo(false)
+    },[reloadUserInfo])
     return(
         <ScrollView>    
             
-            <View style={styles.viewButton}>
-                {userInfo&&<InfoUser userInfo={userInfo} toastRef={toastRef}/>}             
+            <View>
+                {userInfo&&(<InfoUser userInfo={userInfo} toastRef={toastRef} setreloadUserInfo={setreloadUserInfo}/>)} 
+                
+                        
             </View>
             <View style={styles.viewButton}>    
             <Button 

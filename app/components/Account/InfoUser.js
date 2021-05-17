@@ -10,7 +10,7 @@ import AccountOptions from '../Account/AccountOptions'
 export default function InfoUser(props){
    // const {userInfo} = props
    // const {photoURL, displayName, email} = userInfo
-    const {userInfo:{uid, photoURL, displayName, email}, toastRef} = props
+    const {userInfo:{uid, photoURL, displayName, email},userInfo, toastRef, setreloadUserInfo} = props
     console.log(uid)
 
     const changeAvatar= async()=>{
@@ -105,7 +105,7 @@ export default function InfoUser(props){
                 </View>
                 
             </View>
-            <AccountOptions/>
+            <AccountOptions userInfo={userInfo} setreloadUserInfo={setreloadUserInfo}/>
         </View>
     
     )
