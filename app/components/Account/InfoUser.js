@@ -1,19 +1,22 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { StyleSheet, View, Text} from 'react-native'
 import {Avatar} from 'react-native-elements'
 import firebase from 'firebase'
 import * as Permissions from 'expo-permissions'
 import * as ImagePicker from 'expo-image-picker'
 import AccountOptions from '../Account/AccountOptions'
+import Loading from '../../components/Loading'
 
 
 export default function InfoUser(props){
    // const {userInfo} = props
    // const {photoURL, displayName, email} = userInfo
     const {userInfo:{uid, photoURL, displayName, email},userInfo, toastRef, setreloadUserInfo} = props
+    const [isLoading, setIsLoading] = useState(false)
     console.log(uid)
 
     const changeAvatar= async()=>{
+        
         const resultPermissions = await Permissions.askAsync(Permissions.CAMERA_ROLL)
         console.log(resultPermissions.permissions.mediaLibrary)
         const resultPermissionsCamera = resultPermissions.permissions.mediaLibrary.status
@@ -41,9 +44,11 @@ export default function InfoUser(props){
                     visibilityTime: 3000,
                 }); 
             } else{
+                setIsLoading(true)
                 uploadImage(result.uri).then(()=>{
                     console.log('imagen subida a firebase')
                     updatePhotoUrl()
+                    setIsLoading(false)
                 } ).catch(()=>{
                      toastRef.current.show({
                         type: 'info',
@@ -81,6 +86,7 @@ export default function InfoUser(props){
             }
             await firebase.auth().currentUser.updateProfile(update)
             console.log('Imagen actualizada')
+            setreloadUserInfo(true)
         })
     }
 
@@ -106,6 +112,7 @@ export default function InfoUser(props){
                 
             </View>
             <AccountOptions userInfo={userInfo} setreloadUserInfo={setreloadUserInfo}/>
+            <Loading isVisible={isLoading} text={'Carganding...'}/>
         </View>
     
     )

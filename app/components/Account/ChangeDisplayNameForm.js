@@ -10,6 +10,7 @@ export default function ChangeDisplayNameForm(props){
     const [newDisplayName, setNewDisplayName] = useState(null)
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+    
 
     const onSubmit=()=>{
         setError(null)
