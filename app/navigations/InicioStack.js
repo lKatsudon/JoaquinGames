@@ -1,6 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import Inicio from '../screens/Inicio'
+import Inicio from '../screens/Inicio/Inicio'
+import AddInicio from '../screens/Inicio/AddInicio'
 
 
 
@@ -12,7 +13,12 @@ export default function InicioStack(){
             <Stack.Screen
                 name='inicio'
                 component={Inicio}
-                options={{ title:'Inicio'}}
+                options={{ title:'BLOG'}}
+            />
+            <Stack.Screen
+                name='AddInicio'
+                component={AddInicio}
+                options={{ title:'AddAsunto'}}
             />
             
         </Stack.Navigator>

@@ -16,7 +16,7 @@ export default function Navigation(){
     return(
         <NavigationContainer>
             <Tab.Navigator
-                initialRouteName='Inicio'
+                initialRouteName='INICIO'
                 tabBarOptions={{
                     inactiveTintColor: '#000000',
                     activeTintColor: '#FF0000'
@@ -34,7 +34,7 @@ export default function Navigation(){
                 <Tab.Screen 
                 name='favorite-games' 
                 component={FavoriteGameStack}
-                options={{title:"JUEGOS FAVORITOS"}}
+                options={{title:"FAVORITOS"}}
                 />
                 <Tab.Screen 
                 name='top-games' 
@@ -44,7 +44,7 @@ export default function Navigation(){
                 <Tab.Screen 
                 name='search-games' 
                 component={SearchGamesStack}
-                options={{title:"BUSCADOR DE JUEGOS"}}
+                options={{title:"BUSCADOR"}}
                 />
                 <Tab.Screen 
                 name='account' 

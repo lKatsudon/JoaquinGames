@@ -12,7 +12,7 @@ export default function Loading(props){
             overlayStyle={styles.overlay}
         >
         <View>
-            {<ActivityIndicator size='large' color='#78c4d4'/>}
+            {<ActivityIndicator size='large' color='#F0AB00'/>}
             {text && <Text style={styles.text}>{text}</Text>}
         </View>
         </Overlay>
@@ -26,18 +26,17 @@ const styles = StyleSheet.create({
         width:'90%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#ffffff',
-        borderColor: '#b7657b',
+        backgroundColor: '#000000',
+        borderColor: '#F0AB00',
         borderWidth: 2,
         borderRadius: 10,
 
     
     },
     text:{
-        color:'#78c4d4',
+        color:'#F0AB00',
         textTransform: 'uppercase',
         marginTop: 10,
-        //----------//
         fontSize: 30,
         paddingVertical: 10,
         alignSelf: 'center',
