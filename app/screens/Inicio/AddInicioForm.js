@@ -1,15 +1,24 @@
-import React, {useState} from 'react'
-import {View, Text, StyleSheet} from 'react-native'
-import { Input, Button } from 'react-native-elements'
+import React, {useState, useEffect} from 'react'
+import {View, Text, StyleSheet, ScrollView} from 'react-native'
+import { Input, Button, Icon, Avatar } from 'react-native-elements'
+import Modal from '../../components/Modal'
+import * as Permissions from 'expo-permissions'
+import * as ImagePicker from 'expo-image-picker'
+import * as Location from 'expo-location'
+import { map, size } from 'lodash' 
+
 
 export default function AddInicioForm(props){
     const {toastRef, setIsLoading, navigation} = props
     const [nameAsunto, setNameAsunto] = useState(null)
     const [Asunto, setAsunto] = useState(null)
     const [Mensaje, setMensaje] = useState(null)
+    const [Location, setLocation] = useState(null)
     const [errorVideoJuego, setErrorVideoJuego] = useState(null)
     const [errorAsunto, setErrorAsunto] = useState(null)
     const [errorMensaje, setErrorMensaje] = useState(null)
+    const [isVisibleMap, setisVisibleMap] = useState(null)
+    const [imageSelected, setImageSelected] = useState([])
 
     const onSubmit = ()=>{
         
@@ -45,9 +54,10 @@ export default function AddInicioForm(props){
             setErrorVideoJuego(null)
             setErrorAsunto(null)
             setErrorMensaje(null)
-            console.log('Nombre del VideoJuegoe:', nameAsunto)
-            console.log('Nombre de la Asunto:', Asunto)
-            console.log('Descripción del producto:', Mensaje)
+            console.log('Nombre del VideoJuego:', nameAsunto)
+            console.log('Tema del Asunto:', Asunto)
+            console.log('Contenido del mensaje:', Mensaje)
+            console.log('Localizacion:', Location)
             toastRef.current.show({
                 type: 'success',
                 position: 'top',
@@ -95,16 +105,138 @@ export default function AddInicioForm(props){
                 onChange={(e)=>setMensaje(e.nativeEvent.text)}
                 errorMessage={errorMensaje}
             />
+            <Input
+                placeholder='Ubicacion'
+                placeholderTextColor="#FFFFFF"
+                containerStyle={styles.input}
+                rightIcon={{
+                    type:'material-community',
+                    name:'map-marker-radius',
+                    color:'#F0AB00',
+                    onPress:()=> setisVisibleMap(true)
+                }}
+                onChange={(e)=>setLocation(e.nativeEvent.text)}
+            
+            />
+            <UploadImage
+               toastRef={toastRef}
+               imageSelected={imageSelected}
+               setImageSelected={setImageSelected}
+               />
             <Button
                 title= 'POSTEAR'
                 containerStyle={styles.btnContainer}
                 buttonStyle={styles.btn}
                 onPress={onSubmit}
-                //loading={isLoading}
+                
             />
+            <Maps isVisibleMap={isVisibleMap} setisVisibleMap={setisVisibleMap}>
+                    <Text>Cha</Text>
+                </Maps>
         </View>
     )
 }
+
+function Maps(props){
+    const {isVisibleMap, setisVisibleMap} = props
+    const [location, setLocation] = useState(null)
+
+    useEffect(() => {
+        (async()=>{
+            const resultPermissions = await Permissions.askAsync(Permissions.LOCATION_FOREGROUND)
+            console.log(resultPermissions)
+            const statusPermissions = resultPermissions.permissions.locationForeground.status
+            if(!statusPermissions==='granted'){
+                toastRef.current.show({
+                    type: 'error',
+                    position: 'top',
+                    text1: 'Permissions',
+                    text2: 'No se puede sin permisos compa'
+
+                })
+                 
+            }else {
+                const locate = await Location.getCurrentPositionAsync({})
+                console.log(locate)
+                setLocation({
+                    latitude: locate.coords.latitude,
+                    longitude: locate.coords.longitude
+                })
+            }
+        })()
+    }, [])
+
+    return(
+        <Modal isVisible={isVisibleMap} setIsVisible={setisVisibleMap}>
+            <Text>LISTOGRO</Text>
+        </Modal>
+    )
+}
+
+function UploadImage({toastRef, imageSelected, setImageSelected}){
+   
+    const changeAvatar= async()=>{
+     const resultPermissions = await Permissions.askAsync(Permissions.CAMERA_ROLL)
+     const resultPermissionsCamera = resultPermissions.permissions.mediaLibrary.status
+ 
+     if(resultPermissionsCamera === 'denied'){
+         toastRef.current.show({
+             type: 'info',
+             position: 'top',
+             text1: 'Permissions',
+             text2: 'Se necesitan los permisos para entrar a la galeria',
+             visibilityTime: 3000
+         })
+     }else{
+         const result = await ImagePicker.launchImageLibraryAsync({
+             allowsEditing:true,
+             aspect:[4,3]
+         })
+         console.log(result)
+         if (result.cancelled){
+             toastRef.current.show({
+                 type: 'info',
+                 position: 'top',
+                 text1: 'Cancelled',
+                 text2: 'No elegiste una imagen',
+                 visibilityTime: 3000
+             })
+         } else{
+             setImageSelected([...imageSelected, result.uri])
+         }
+     }
+ }
+ 
+     return(
+         <ScrollView
+             horizontal
+             style={styles.viewImage}
+         >
+            {
+                size(imageSelected) < 5 &&(
+                 <Icon
+                         type="material-community"
+                         name="camera"
+                         color="#000000"
+                         size={40}
+                         containerStyle={styles.containerIcon}
+                         onPress={ changeAvatar }
+ 
+                     />
+                     )
+                }
+                {
+                     map(imageSelected,(imageComponent, index)=>(
+                         <Avatar
+                             key={index}
+                             style={styles.miniatureStyle}
+                             source={{uri:imageComponent}}
+                             />
+                     ))
+                }
+         </ScrollView>
+     )
+ }
 
 const styles = StyleSheet.create({
     input:{
@@ -122,5 +254,23 @@ const styles = StyleSheet.create({
     },
     btn:{
         backgroundColor: '#F0AB00'
+    },
+    viewImage:{
+        flexDirection: 'row',
+        marginHorizontal:20,
+        marginTop: 30,
+    },
+    containerIcon:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight:10,
+        height: 70,
+        width:70,
+        backgroundColor: '#F0AB00'
+    },
+    miniatureStyle:{
+        width: 70,
+        height: 70,
+        marginRight: 20
     }
 })

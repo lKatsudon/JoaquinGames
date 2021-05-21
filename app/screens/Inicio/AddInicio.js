@@ -1,8 +1,8 @@
 import React, {useState, useRef} from 'react'
 import {View, Text, StyleSheet} from 'react-native'
-import Loading from '../../components/Loading'//Su archivo loading
+import Loading from '../../components/Loading'
 import Toast from 'react-native-toast-message'
-import AddInicioForm from './AddInicioForm' //su archivo addqueseaform
+import AddInicioForm from './AddInicioForm' 
 import {useNavigation} from '@react-navigation/native'
 
 
