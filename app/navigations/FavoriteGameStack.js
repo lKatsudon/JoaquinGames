@@ -11,7 +11,7 @@ export default function FavoriteGameStack(){
             <Stack.Screen
                 name='favorite-game'
                 component={FavoriteGame}
-                options={{ title:'¿Que prefiere jovenazo?'}}
+                options={{ title:'FAVORITOS'}}
             />
             
         </Stack.Navigator>

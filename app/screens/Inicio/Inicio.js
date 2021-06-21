@@ -41,7 +41,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000'
   },
   textBody:{
-    color:'#FFFFFF'
+    color:'#FFFFFF',
+    fontWeight:'bold',
+    textAlign:'center',
+    fontSize: 30
   },
   btnContainer:{
     position:'absolute',

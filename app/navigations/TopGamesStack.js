@@ -11,7 +11,7 @@ export default function TopGamesStack(){
             <Stack.Screen
                 name='top-games'
                 component={TopGames}
-                options={{ title:'¿Te parece bien este top?'}}
+                options={{ title:'NOTICIAS GAMING'}}
             />
             
         </Stack.Navigator>

@@ -63,7 +63,7 @@ export default function ChangePasswordForm(props){
     return(
         <View style={styles.view}>
             <Input
-                placeholder='Cambiar nombre'
+                placeholder='Cambiar contraseña'
                 containerStyle={styles.input}
                 password={true}
                 secureTextEntry={!showPassword}

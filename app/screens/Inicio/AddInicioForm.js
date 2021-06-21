@@ -6,6 +6,7 @@ import * as Permissions from 'expo-permissions'
 import * as ImagePicker from 'expo-image-picker'
 import * as Location from 'expo-location'
 import { map, size } from 'lodash' 
+import MapView from 'react-native-maps'
 
 
 export default function AddInicioForm(props){
@@ -19,6 +20,8 @@ export default function AddInicioForm(props){
     const [errorMensaje, setErrorMensaje] = useState(null)
     const [isVisibleMap, setisVisibleMap] = useState(null)
     const [imageSelected, setImageSelected] = useState([])
+    const [locationComponent, setLocationComponent] = useState(null)
+
 
     const onSubmit = ()=>{
         
@@ -87,7 +90,7 @@ export default function AddInicioForm(props){
                 containerStyle={styles.input}
                 rightIcon={{
                     type:'material-community',
-                    name:'nintendo-game-boy',
+                    name:'triforce',
                     color:'#F0AB00'
                 }}
                 onChange={(e)=>setAsunto(e.nativeEvent.text)}
@@ -99,7 +102,7 @@ export default function AddInicioForm(props){
                 containerStyle={styles.input}
                 rightIcon={{
                     type:'material-community',
-                    name:'nintendo-game-boy',
+                    name:'message',
                     color:'#F0AB00'
                 }}
                 onChange={(e)=>setMensaje(e.nativeEvent.text)}
@@ -130,7 +133,7 @@ export default function AddInicioForm(props){
                 onPress={onSubmit}
                 
             />
-            <Maps isVisibleMap={isVisibleMap} setisVisibleMap={setisVisibleMap}>
+            <Maps isVisibleMap={isVisibleMap} setisVisibleMap={setisVisibleMap} setLocationComponent={setLocationComponent}>
                     <Text>Cha</Text>
                 </Maps>
         </View>
@@ -138,7 +141,7 @@ export default function AddInicioForm(props){
 }
 
 function Maps(props){
-    const {isVisibleMap, setisVisibleMap} = props
+    const {isVisibleMap, setisVisibleMap, setLocationComponent} = props
     const [location, setLocation] = useState(null)
 
     useEffect(() => {
@@ -151,7 +154,7 @@ function Maps(props){
                     type: 'error',
                     position: 'top',
                     text1: 'Permissions',
-                    text2: 'No se puede sin permisos compa'
+                    text2: 'No se puede sin permisos compa',
 
                 })
                  
@@ -160,15 +163,54 @@ function Maps(props){
                 console.log(locate)
                 setLocation({
                     latitude: locate.coords.latitude,
-                    longitude: locate.coords.longitude
+                    longitude: locate.coords.longitude,
+                    latitudeDelta: 0.001,
+                    longitudeDelta: 0.001
                 })
             }
         })()
     }, [])
 
+    const confirmLocation=()=>{
+        setLocation(location)
+        setisVisibleMap(false)
+        console.log('---------------')
+        console.log(location)
+    }
+
     return(
         <Modal isVisible={isVisibleMap} setIsVisible={setisVisibleMap}>
-            <Text>LISTOGRO</Text>
+            <View>
+                {location&&
+                    <MapView
+                    style={styles.mapStyle}
+                    initialRegion={location}
+                    showsUserLocation={true}
+                    onRegionChange={(region)=>setLocation(region)}
+                    >
+                    <MapView.Marker
+                        coordinate={{
+                            latitude:location.latitude,
+                            longitude:location.longitude
+                        }}
+                        draggable
+                    />
+                    </MapView>}
+                    <View style={styles.viewBtn}>
+                        <Button
+                            title='Guardar Ubicación'
+                            containerStyle={styles.viewMapBtnContainerSave}
+                            buttonStyle={styles.viewMapBtnSave}
+                            onPress={confirmLocation}
+                        />
+                        <Button
+                            title='Cancelar Ubicación'
+                            containerStyle={styles.viewMapBtnContainerCancel}
+                            buttonStyle={styles.viewMapBtnCancel}
+                            onPress={()=>setisVisibleMap(false)}
+                        />
+                    </View>
+            </View>
         </Modal>
     )
 }
@@ -213,7 +255,7 @@ function UploadImage({toastRef, imageSelected, setImageSelected}){
              style={styles.viewImage}
          >
             {
-                size(imageSelected) < 5 &&(
+                size(imageSelected) < 4 &&(
                  <Icon
                          type="material-community"
                          name="camera"
@@ -272,5 +314,26 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         marginRight: 20
+    },
+    mapStyle:{
+        width: '100%',
+        height: 550
+    },
+    viewBtn:{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 10
+    },
+    viewMapBtnContainerSave:{
+        paddingRight: 5
+    },
+    viewMapBtnSave:{
+        backgroundColor:'#000000'
+    },
+    viewMapBtnContainerCancel:{
+        paddingRight: 5
+    },
+    viewMapBtnCancel:{
+        backgroundColor:'#000000'
     }
 })
