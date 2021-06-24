@@ -19,7 +19,7 @@ export default function Inicio(){
     return(
         
         <View style={styles.viewBody}>
-          <Text style={styles.textBody}>BIENVENIDO A JOAQUIN GAMES</Text>
+          <Text style={styles.textBody}>BIENVENIDO A CITO GAMES</Text>
           {user && 
           <Icon
               reverse

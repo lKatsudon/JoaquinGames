@@ -27,6 +27,13 @@ export default function FavoriteGame(){
                 style={styles.strech3}
                 source={require('../../assets/img/Genshin-Impact.jpg')}
             />
+            <Text style={styles.colorText7}> Top 4</Text>
+            <Text style={styles.colorText8}>Grand Theft Auto V</Text>
+            <Text style={styles.bodyText4}>Se trata de una aventura de acción de mundo abierto con multitud de misiones en la que encarnamos a tres personajes distintos: Trevor, Michael y Franklin. Además, cuenta con GTA Online, el modo multijugador en lína de GTA 5</Text>
+            <Image
+                style={styles.strech4}
+                source={require('../../assets/img/GTAV.jpg')}
+            />
         </View>
         </ScrollView>
     )
@@ -100,6 +107,26 @@ const styles = StyleSheet.create({
         color:'#F0AB00'
     },
     strech3:{
+        width:'100%',
+        height: 300,
+        resizeMode: 'contain',
+        marginBottom: 40
+    },
+    colorText7:{
+        color:'#FFFFFF',
+        fontSize: 25,
+        paddingTop: 15,
+        textAlign:'center'
+    },
+    colorText8:{
+        color:'#FFFFFF',
+        paddingTop: 15,
+        fontSize: 20
+    },
+    bodyText4:{
+        color:'#F0AB00'
+    },
+    strech4:{
         width:'100%',
         height: 300,
         resizeMode: 'contain',

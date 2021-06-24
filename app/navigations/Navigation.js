@@ -44,7 +44,7 @@ export default function Navigation(){
                 <Tab.Screen 
                 name='search-games' 
                 component={SearchGamesStack}
-                options={{title:"BUSCADOR"}}
+                options={{title:"JUEGOS"}}
                 />
                 <Tab.Screen 
                 name='account' 

@@ -258,7 +258,7 @@ function UploadImage({toastRef, imageSelected, setImageSelected}){
                 size(imageSelected) < 4 &&(
                  <Icon
                          type="material-community"
-                         name="camera"
+                         name="image-multiple"
                          color="#000000"
                          size={40}
                          containerStyle={styles.containerIcon}
